@@ -143,5 +143,4 @@ function handleEditKey(event, index) {
     }
 }
 
-
 addBtn.addEventListener('click', addTodo)       // When add todo btn clicked addTodo called.
