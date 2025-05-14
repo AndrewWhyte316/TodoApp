@@ -144,7 +144,7 @@ section {
 }
 
 .completed {
-    background-color: #475569; /* darker card */
+    background-color: #475569; 
     color: #cbd5e1;
     opacity: 0.9;
 }
@@ -159,3 +159,5 @@ section {
     opacity: 0.6;
 }
 
+.iconBtn i.fa-rotate-left {
+    color: #84cc16; 
