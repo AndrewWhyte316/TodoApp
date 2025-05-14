@@ -9,14 +9,26 @@ h1, h2 {
 }
 
 body {
+    background-image: url('https://images.unsplash.com/photo-1503264116251-35a269479413?auto=format&fit=crop&w=1920&q=80');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
     font-family: "JetBrains Mono", monospace;
     display: flex;
     flex-direction: column;
     gap: 24px;
     padding: 14px;
     min-height: 100vh;
-    background: linear-gradient(135deg, #cbd5e1, #94a3b8); /* Slate-blue gradient */
-    color: #1e293b;
+    color: #fcfcfc;
+}
+
+body::before {
+    content: "";
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0, 0, 0, 0.4); /* or use white: rgba(255,255,255,0.4) */
+    z-index: -1;
 }
 
 h1 {
