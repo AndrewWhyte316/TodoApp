@@ -124,7 +124,7 @@ section {
 }
 
 .iconBtn i.fa-pen-to-square {
-    color: #1b73e8;
+    color: #facc15;
 }
 
 .iconBtn i.fa-xmark {
@@ -132,9 +132,20 @@ section {
 }
 
 .iconBtn i.fa-arrow-up {
-    color: #2a9d8f;
+    color: #f97316;
 }
 
 .iconBtn i.fa-arrow-down {
-    color: #f4a261;
+    color: #22d3ee;
+}
+
+.iconBtn i.fa-check {
+    color: #16a34a;
+}
+
+.completed {
+    background-color: #475569; /* darker card */
+    color: #cbd5e1;
+    text-decoration: line-through;
+    opacity: 0.9;
 }

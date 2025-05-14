@@ -19,8 +19,9 @@ function addTodo() {
     if (!todo) { return}
 
     console.log('Added todo: ',todo)
-    todoList.push({ text: todo, priority: todoList.length})
-textarea.value = ''                 // resets to empty
+    todoList.push({ text: todo, priority: todoList.length, completed: false })
+
+    textarea.value = ''                 // resets to empty
     updateUI()
 }
 
@@ -58,27 +59,48 @@ function updatePriorities() {
     })
 }
 
-function updateUI() {
-    let newInnerHTML = ''           // empty string
-
-    todoList.forEach((todoElement, todoIndex) => {
-        newInnerHTML += `
-            <div class="todo">
-                <p>${todoElement.text}</p>
-                <div class="btnContainer">
-                    <button class="iconBtn" onclick="moveUp(${todoIndex})"><i class="fa-solid fa-arrow-up"></i></button>
-                    <button class="iconBtn" onclick="moveDown(${todoIndex})"><i class="fa-solid fa-arrow-down"></i></button>
-                    <button class="iconBtn" onclick="editTodo(${todoIndex})"><i class="fa-solid fa-pen-to-square"></i></button>
-                    <button class="iconBtn" onclick="deleteTodo(${todoIndex})"><i class="fa-solid fa-xmark"></i></button>
-                </div>
-            </div>
-            `
-    })
-
-    todoContainer.innerHTML = newInnerHTML
-
-    localStorage.setItem('todos', JSON.stringify({ todoList }))     // to save to localstorage
-
+function toggleComplete(index) {
+    todoList[index].completed = !todoList[index].completed
+    updateUI()
 }
+
+
+function updateUI() {
+    todoList.sort((a, b) => a.priority - b.priority)
+
+    const activeContainer = document.querySelector('.todoContainer')
+    const completedContainer = document.querySelector('.completedContainer')
+
+    activeContainer.innerHTML = ''
+    completedContainer.innerHTML = ''
+
+    todoList.forEach((todo, index) => {
+        const container = todo.completed ? completedContainer : activeContainer
+        container.innerHTML += generateTodoHTML(todo, index, todo.completed)
+    });
+
+    localStorage.setItem('todos', JSON.stringify({ todoList }))
+}
+
+
+function generateTodoHTML(todo, index, isCompleted = false) {
+    return `
+        <div class="todo ${isCompleted ? 'completed' : ''}">
+            <p>${todo.text}</p>
+            <div class="btnContainer">
+                ${!isCompleted ? `
+                <button class="iconBtn" onclick="moveUp(${index})"><i class="fa-solid fa-arrow-up"></i></button>
+                <button class="iconBtn" onclick="moveDown(${index})"><i class="fa-solid fa-arrow-down"></i></button>
+                <button class="iconBtn" onclick="editTodo(${index})"><i class="fa-solid fa-pen-to-square"></i></button>
+                ` : ''}
+                <button class="iconBtn" onclick="toggleComplete(${index})">
+                    <i class="fa-solid ${isCompleted ? 'fa-rotate-left' : 'fa-check'}"></i>
+                </button>
+                <button class="iconBtn" onclick="deleteTodo(${index})"><i class="fa-solid fa-xmark"></i></button>
+            </div>
+        </div>
+    `
+}
+
 
 addBtn.addEventListener('click', addTodo)       // When add todo btn clicked addTodo called.
