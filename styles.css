@@ -146,6 +146,16 @@ section {
 .completed {
     background-color: #475569; /* darker card */
     color: #cbd5e1;
-    text-decoration: line-through;
     opacity: 0.9;
 }
+
+.todo.completed p {
+    text-decoration: line-through;
+    opacity: 0.6;
+}
+
+.todo.completed p {
+    text-decoration: line-through;
+    opacity: 0.6;
+}
+
