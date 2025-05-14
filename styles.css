@@ -15,6 +15,8 @@ body {
     gap: 24px;
     padding: 14px;
     min-height: 100vh;
+    background: linear-gradient(135deg, #cbd5e1, #94a3b8); /* Slate-blue gradient */
+    color: #1e293b;
 }
 
 h1 {
@@ -44,9 +46,21 @@ form textarea {
 }
 
 form button {
-    font-family: "JetBrains Mono", monospace;
-    padding: 8px;
+    background: linear-gradient(135deg, #4f46e5, #3b82f6); /* deep indigo to blue */
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    padding: 12px 20px;
     cursor: pointer;
+    box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
+    transition: all 0.3s ease;
+}
+
+form button:hover {
+    background: linear-gradient(135deg, #4338ca, #2563eb);
+    transform: scale(1.02);
 }
 
 .todoContainer,
@@ -57,11 +71,33 @@ form button {
 }
 
 .todo {
-    padding: 14px; 
-    border: 1px solid lightgray;
-    border-radius: 4px;
+    background: linear-gradient(135deg, #2563eb, #1e3a8a); /* Deep blue contrast */
+    border-left: 6px solid #60a5fa; /* soft blue accent */
+    border-radius: 10px;
+    padding: 16px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    color: #f8fafc; /* very light slate for text */
+    font-weight: 500;
+    transition: transform 0.2s ease;
 }
 
+.todo:hover {
+    transform: translateY(-2px);
+    transition: transform 0.2s ease;
+}
+
+section {
+    background: linear-gradient(135deg, #4f46e5, #3b82f6); /* deep indigo to blue */
+    color: white;
+    border: none;
+    border-radius: 10px;
+    font-size: 1.1rem;
+    font-weight: bold;
+    padding: 12px 20px;
+    cursor: pointer;
+    box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
+    transition: all 0.3s ease;
+}
 
 .btnContainer {
     display: flex;
@@ -70,6 +106,8 @@ form button {
 }
 
 .iconBtn {
+    background-color: #e7f1fc;
+    color: #007bff;
     background: transparent;
     border: none;
     outline: none;
@@ -82,5 +120,21 @@ form button {
 }
 
 .iconBtn:hover {
-    background: rgb(242, 240, 240);
+    background: #d0e7ff;
+}
+
+.iconBtn i.fa-pen-to-square {
+    color: #1b73e8;
+}
+
+.iconBtn i.fa-xmark {
+    color: #e63946;
+}
+
+.iconBtn i.fa-arrow-up {
+    color: #2a9d8f;
+}
+
+.iconBtn i.fa-arrow-down {
+    color: #f4a261;
 }
