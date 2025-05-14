@@ -3,6 +3,7 @@ const addBtn = document.getElementById('addBtn')    // select element by ID.
 const todoContainer = document.querySelector('.todoContainer')
 
 let todoList = []
+let editingIndex = null
 
 function initialLoad() {
     const stored = localStorage.getItem('todos')
@@ -15,21 +16,28 @@ initialLoad()
 
 
 function addTodo() {
-    const todo = textarea.value.trim()
-    if (!todo) { return}
+    const todoText = textarea.value.trim();
+    if (!todoText) return;
 
-    console.log('Added todo: ',todo)
-    todoList.push({ text: todo, priority: todoList.length, completed: false })
+    if (editingIndex !== null) {
+        // editing an existing item
+        todoList[editingIndex].text = todoText;
+        editingIndex = null;
+    } else {
+        // Adding new item
+        todoList.push({
+        text: todoText,
+        priority: todoList.length,
+        completed: false
+        })
+    }
 
-    textarea.value = ''                 // resets to empty
+    textarea.value = ''
     updateUI()
 }
 
 function editTodo(index) {
-    textarea.value = todoList[index].text
-
-    todoList.splice(index, 1) // remove the item
-    updatePriorities()
+    editingIndex = index
     updateUI()
 }
 
@@ -84,22 +92,55 @@ function updateUI() {
 
 
 function generateTodoHTML(todo, index, isCompleted = false) {
+    const isEditing = index === editingIndex;
+
     return `
         <div class="todo ${isCompleted ? 'completed' : ''}">
-            <p>${todo.text}</p>
-            <div class="btnContainer">
-                ${!isCompleted ? `
-                <button class="iconBtn" onclick="moveUp(${index})"><i class="fa-solid fa-arrow-up"></i></button>
-                <button class="iconBtn" onclick="moveDown(${index})"><i class="fa-solid fa-arrow-down"></i></button>
-                <button class="iconBtn" onclick="editTodo(${index})"><i class="fa-solid fa-pen-to-square"></i></button>
-                ` : ''}
-                <button class="iconBtn" onclick="toggleComplete(${index})">
-                    <i class="fa-solid ${isCompleted ? 'fa-rotate-left' : 'fa-check'}"></i>
-                </button>
-                <button class="iconBtn" onclick="deleteTodo(${index})"><i class="fa-solid fa-xmark"></i></button>
-            </div>
+            ${isEditing ? `
+                <input type="text" class="editInput" value="${todo.text}" onkeyup="handleEditKey(event, ${index})" />
+                <div class="btnContainer">
+                    <button class="iconBtn" onclick="saveEdit(${index})"><i class="fa-solid fa-floppy-disk"></i></button>
+                    <button class="iconBtn" onclick="cancelEdit()"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+            ` : `
+                <p>${todo.text}</p>
+                <div class="btnContainer">
+                    ${!isCompleted ? `
+                    <button class="iconBtn" onclick="moveUp(${index})"><i class="fa-solid fa-arrow-up"></i></button>
+                    <button class="iconBtn" onclick="moveDown(${index})"><i class="fa-solid fa-arrow-down"></i></button>
+                    <button class="iconBtn" onclick="editTodo(${index})"><i class="fa-solid fa-pen-to-square"></i></button>
+                    ` : ''}
+                    <button class="iconBtn" onclick="toggleComplete(${index})">
+                        <i class="fa-solid ${isCompleted ? 'fa-rotate-left' : 'fa-check'}"></i>
+                    </button>
+                    <button class="iconBtn" onclick="deleteTodo(${index})"><i class="fa-solid fa-xmark"></i></button>
+                </div>
+            `}
         </div>
-    `
+    `;
+}
+
+function saveEdit(index) {
+    const input = document.querySelector('.editInput');
+    if (!input) return;
+
+    const updatedText = input.value.trim();
+    if (!updatedText) return;
+
+    todoList[index].text = updatedText;
+    editingIndex = null;
+    updateUI();
+}
+
+function cancelEdit() {
+    editingIndex = null;
+    updateUI();
+}
+
+function handleEditKey(event, index) {
+    if (event.key === 'Enter') {
+        saveEdit(index);
+    }
 }
 
 

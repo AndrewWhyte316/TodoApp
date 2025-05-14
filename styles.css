@@ -161,3 +161,16 @@ section {
 
 .iconBtn i.fa-rotate-left {
     color: #84cc16; 
+}
+
+.editInput {
+    width: 100%;
+    padding: 10px;
+    border-radius: 6px;
+    font-size: 1rem;
+    font-family: "JetBrains Mono", monospace;
+    border: 1px solid #94a3b8;
+    background: #e0f2fe;
+    color: #1e293b;
+    margin-bottom: 10px;
+}
